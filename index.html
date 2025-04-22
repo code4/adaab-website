@@ -27,6 +27,9 @@
     header {
       background-color: #000;
       color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav {
       max-width: 1200px;
@@ -35,11 +38,27 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      margin-bottom: 4px;
+      border-radius: 5px;
     }
     nav ul {
       list-style: none;
       display: flex;
       gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     nav a {
       color: #fff;
@@ -53,6 +72,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-shrink: 0;
     }
     .logo img {
       height: 60px;
@@ -175,14 +195,33 @@
     }
     /* Responsive */
     @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
       nav ul {
-        gap: 1rem;
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        margin-top: 1rem;
+      }
+      nav ul.active {
+        display: flex;
+      }
+      nav ul li {
+        padding: 0.25rem 0;
       }
       .hero h1 {
         font-size: 2.25rem;
       }
     }
   </style>
+  <script>
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        document.querySelector('nav ul').classList.remove('active');
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -192,6 +231,11 @@
       <div class="logo">
         <img src="images/logo.png" alt="Adaab Hyderabad logo" />
         <strong>Adaab Hyderabad</strong>
+      </div>
+      <div class="nav-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
       <ul>
         <li><a href="#menu">Menu</a></li>
